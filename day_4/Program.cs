@@ -96,7 +96,7 @@ namespace day_4
 
             }
             System.Console.WriteLine("Part one: " + validPassportCounterPartOne);
-            System.Console.WriteLine("Part one: " + validPassportCounterPartTwo);
+            System.Console.WriteLine("Part two: " + validPassportCounterPartTwo);
         }
     }
 }
