@@ -16,6 +16,7 @@ namespace day_1
                 for (int j = i + 1; j < input.Length; j++)
                 {
                     int possibleMatch = Convert.ToInt16(input[j]);
+                    // Part one
                     if (find.Equals(possibleMatch))
                     {
                         System.Console.WriteLine(line + " + " + find + " = 2020");
@@ -27,6 +28,7 @@ namespace day_1
                         for (int k = j + 1; k < input.Length; k++)
                         {
                             int possibleLastMatch = Convert.ToInt16(input[k]);
+                            // Part two
                             if (lastFind.Equals(possibleLastMatch))
                             {
                                 System.Console.WriteLine(line + " + " + possibleMatch + " + " + possibleLastMatch + " = 2020");
