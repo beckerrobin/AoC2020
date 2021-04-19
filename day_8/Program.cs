@@ -52,18 +52,19 @@ namespace day_8
 
         static void PartTwo()
         {
-            HashSet<int> triedChanges = new HashSet<int>();
             string[] input = File.ReadAllLines("input.txt");
-
             Regex regex = new Regex(@"^(\w+) ([+-])(\d+)$");
 
+            HashSet<int> triedChanges = new HashSet<int>();
+            
             while (true)
             {
-                System.Console.WriteLine("Starting " + triedChanges.Count);
+                int accumulator = 0;
                 bool loopFound = false;
+                bool hasChanged = false;
+                
                 Dictionary<int, string> visitedAddresses = new Dictionary<int, string>();
 
-                int accumulator = 0;
                 for (int i = 0; i < input.Length;)
                 {
                     string line = input[i];
@@ -81,12 +82,7 @@ namespace day_8
 
                     if (operation == "acc")
                         accumulator += argValue;
-                    else if (triedChanges.Contains(i + argValue) || triedChanges.Contains(i + 1))
-                    {
-                        loopFound = true;
-                        break;
-                    }
-                    else if (operation != "acc")
+                    else if (!hasChanged && operation != "acc" && !triedChanges.Contains(i))
                     {
                         switch (operation)
                         {
@@ -97,24 +93,28 @@ namespace day_8
                                 operation = "jmp";
                                 break;
                         }
-                        System.Console.WriteLine("Tried pos " + i);
                         triedChanges.Add(i);
+                        hasChanged = true;
+                        nextIndex = operation == "jmp" ? i + argValue : i + 1;
                     }
 
-                    i = nextIndex;
 
                     // Loop found
-                    if (visitedAddresses.ContainsKey(i) || triedChanges.Contains(i))
+                    if (visitedAddresses.ContainsKey(nextIndex))
                     {
                         loopFound = true;
                         break;
                     }
+
+                    i = nextIndex;
                 }
 
                 if (!loopFound)
+                {
+                    System.Console.WriteLine("Part two: " + accumulator);
                     break;
+                }
             }
-            System.Console.WriteLine("Part two!");
         }
         static void Main(string[] args)
         {
